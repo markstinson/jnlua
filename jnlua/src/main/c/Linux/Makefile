@@ -1,9 +1,7 @@
 # Paths
-JDK_DIR=/usr/lib/jvm/java-6-openjdk-i386
-LUA_LIB_DIR=/usr/lib
-LUA_INC_DIR=/usr/include/lua5.2
-LUA_VERSION=5.2
-VERSION=52
+JDK_DIR=/usr/lib/jvm/java-8-openjdk-amd64
+LUA_DIR=../../../../lua/lua-5.3.4_Linux44_64_lib
+VERSION=53
 ARCH=amd64
 
 # Tools
@@ -18,16 +16,16 @@ LDFLAGS=-shared
 all: libjnlua$(VERSION).so javavm.so
 
 libjnlua$(VERSION).so: jnlua.o
-	$(LD) $(LDFLAGS) -Wl,-soname=libjnlua$(VERSION).so -olibjnlua$(VERSION).so -L$(LUA_LIB_DIR) jnlua.o -lc -llua$(LUA_VERSION)
+	$(LD) $(LDFLAGS) -Wl,-soname=libjnlua$(VERSION).so -o libjnlua$(VERSION).so jnlua.o $(LUA_DIR)/liblua$(VERSION).a
 
 jnlua.o: ../jnlua.c
-	$(CC) $(CFLAGS) -I$(JDK_DIR)/include -I$(JDK_DIR)/include/linux -I$(LUA_INC_DIR) ../jnlua.c
+	$(CC) $(CFLAGS) -I$(JDK_DIR)/include -I$(JDK_DIR)/include/linux -I$(LUA_DIR)/include ../jnlua.c
 
 javavm.so: javavm.o
-	$(LD) $(LDFLAGS) -Wl,-soname=javavm.so -ojavavm.so -L$(LUA_LIB_DIR) -L$(JDK_DIR)/jre/lib/$(ARCH)/server javavm.o -llua$(LUA_VERSION) -ljvm
+	$(LD) $(LDFLAGS) -Wl,-soname=javavm.so -o javavm.so javavm.o $(LUA_DIR)/liblua$(VERSION).a
 
 javavm.o: ../javavm.c ../javavm.h
-	$(CC) $(CFLAGS) -I$(JDK_DIR)/include -I$(JDK_DIR)/include/linux -I$(LUA_INC_DIR) ../javavm.c
+	$(CC) $(CFLAGS) -I$(JDK_DIR)/include -I$(JDK_DIR)/include/linux -I$(LUA_DIR)/include ../javavm.c
 
 clean:
 	-rm libjnlua$(VERSION).so jnlua.o

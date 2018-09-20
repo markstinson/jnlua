@@ -562,7 +562,7 @@ public class LuaState {
 	 */
 	public synchronized void dump(OutputStream outputStream) throws IOException {
 		check();
-		lua_dump(outputStream);
+		lua_dump(outputStream, 0);
 	}
 
 	// -- Call
@@ -2279,7 +2279,7 @@ public class LuaState {
 	private native void lua_load(InputStream inputStream, String chunkname,
 			String mode) throws IOException;
 
-	private native void lua_dump(OutputStream outputStream) throws IOException;
+	private native void lua_dump(OutputStream outputStream, int strip) throws IOException;
 
 	private native void lua_pcall(int nargs, int nresults);
 

@@ -1,8 +1,7 @@
 # Paths
-JDK_DIR=/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0
-LUA_LIB_DIR=/usr/lib
-LUA_INC_DIR=/usr/include/lua
-VERSION=5.1
+JDK_DIR=/System/Library/Frameworks/JavaVM.framework/Versions/Current
+LUA_DIR=../../../../lua/lua-5.3.4_MacOS1011_lib
+VERSION=53
 
 # Tools
 CC=gcc
@@ -13,13 +12,13 @@ CFLAGS=-c -fno-strict-aliasing -m64 -fPIC -O2 -Wall -DNDEBUG -D_REENTRANT -DLUA_
 LDFLAGS=-dynamiclib -m64
 
 # Description blocks
-all: libjnlua$(VERSION).jnilib
+all: libjnlua$(VERSION).dylib
 
-libjnlua$(VERSION).jnilib: jnlua.o
-	$(LD) $(LDFLAGS) -o libjnlua$(VERSION).jnilib -L$(LUA_LIB_DIR) -lc -llua$(VERSION) jnlua.o
+libjnlua$(VERSION).dylib: jnlua.o
+	$(LD) $(LDFLAGS) -o libjnlua$(VERSION).dylib -lc jnlua.o $(LUA_DIR)/liblua53.a
 
 jnlua.o: ../jnlua.c
-	$(CC) $(CFLAGS) -I$(JDK_DIR)/Headers -I$(LUA_INC_DIR) ../jnlua.c
+	$(CC) $(CFLAGS) -I$(JDK_DIR)/Headers -I $(LUA_DIR)/include ../jnlua.c
 
 clean:
-	-rm libjnlua$(VERSION).jnilib jnlua.o
+	-rm libjnlua$(VERSION).dylib jnlua.o

@@ -402,7 +402,7 @@ JNIEXPORT void JNICALL Java_com_naef_jnlua_LuaState_lua_1dump (JNIEnv *env, jobj
 	if (checkstack(L, JNLUA_MINSTACK)
 			&& checknelems(L, 1)
 			&& (stream.byte_array = newbytearray(1024))) {
-		lua_dump(L, writehandler, &stream);
+		lua_dump(L, writehandler, &stream, 0);
 	}
 	if (stream.bytes) {
 		(*env)->ReleaseByteArrayElements(env, stream.byte_array, stream.bytes, JNI_ABORT);
@@ -498,7 +498,7 @@ JNIEXPORT void JNICALL Java_com_naef_jnlua_LuaState_lua_1pushboolean (JNIEnv *en
 JNLUA_THREADLOCAL jbyte *pushbytearray_b;
 JNLUA_THREADLOCAL jsize pushbytearray_length;
 static int pushbytearray_protected (lua_State *L) {
-	lua_pushlstring(L, pushbytearray_b, pushbytearray_length);
+	lua_pushlstring(L, (const char *) pushbytearray_b, pushbytearray_length);
 	return 1;
 }
 JNIEXPORT void JNICALL Java_com_naef_jnlua_LuaState_lua_1pushbytearray (JNIEnv *env, jobject obj, jbyteArray ba) {
@@ -1366,7 +1366,7 @@ JNIEXPORT void JNICALL Java_com_naef_jnlua_LuaState_lua_1rawset (JNIEnv *env, jo
 }
 
 /* lua_rawseti() */
-JNLUA_THREADLOCAL int rawseti_n;
+JNLUA_THREADLOCAL lua_Integer rawseti_n;
 static int rawseti_protected (lua_State *L) {
 	lua_rawseti(L, 1, rawseti_n);
 	return 0;
@@ -1685,11 +1685,11 @@ JNIEXPORT jint JNICALL Java_com_naef_jnlua_LuaState_lua_1tablesize (JNIEnv *env,
 }
 
 /* lua_tablemove() */
-JNLUA_THREADLOCAL int tablemove_from;
-JNLUA_THREADLOCAL int tablemove_to;
+JNLUA_THREADLOCAL lua_Integer tablemove_from;
+JNLUA_THREADLOCAL lua_Integer tablemove_to;
 JNLUA_THREADLOCAL int tablemove_count;
 static int tablemove_protected (lua_State *L) {
-	int from = tablemove_from, to = tablemove_to;
+  lua_Integer from = tablemove_from, to = tablemove_to;
 	int count = tablemove_count, i;
 	
 	if (from < to) {
