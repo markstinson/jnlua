@@ -72,7 +72,7 @@ public class LuaScriptEngineTest {
 		assertEquals("JNLua", factory.getEngineName());
 
 		// getEngineVersion()
-		assertEquals("1.0", factory.getEngineVersion());
+		assertEquals("1.1", factory.getEngineVersion());
 
 		// getNames()
 		List<String> names = factory.getNames();

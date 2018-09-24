@@ -1,3 +1,10 @@
+### Release 1.1.0 - Lua 5.3 (2018-09-24) ###
+
+- Lua API has been updated to v5.3.4.
+
+- Original Lua binaries and include files are now stored within the project in the 'jnlua/lua/' subdirectory.
+
+- Microsoft VS is used to build Windows DLLs, while Windows Makefile is ignored. Win32 platform has been deprecated.
 
 ### Release 1.0.5 ###
 

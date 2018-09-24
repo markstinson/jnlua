@@ -38,6 +38,8 @@ JNLua 0.9 is based on the Java 6 Platform (JDK 1.6) and Lua 5.1.
 
 JNLua 1.0 is based on the Java 6 Platform (JDK 1.6) and Lua 5.2.
 
+JNLua 1.1 is based on the Java 6 Platform (JDK 1.6) and Lua 5.3.
+
 Max Raskin has done a port of JNLua for the [Android platform](https://code.google.com/p/jnlua-android).
 
 ### Documentation ###

@@ -67,7 +67,7 @@ public class LuaStateTest extends AbstractLuaTest {
 	 */
 	@Test
 	public void testVersion() {
-		assertEquals("1.0", LuaState.VERSION);
+		assertEquals("1.1", LuaState.VERSION);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class LuaStateTest extends AbstractLuaTest {
 	 */
 	@Test
 	public void testLuaVersion() {
-		assertEquals("5.2", LuaState.LUA_VERSION);
+		assertEquals("5.3", LuaState.LUA_VERSION);
 	}
 
 	// -- Property tests
